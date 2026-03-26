@@ -15,16 +15,19 @@ end
 
 -- Addition
 function Vec2.__add(a, b)
+    if not b then b = {} end
     return Vec2:new(a.x + b.x, a.y + b.y)
 end
 
 -- Subtraction
 function Vec2.__sub(a, b)
+    if not b then b = {} end
     return Vec2:new(a.x - b.x, a.y - b.y)
 end
 
 -- Multiplication (vector * scalar OR vector * vector)
 function Vec2.__mul(a, b)
+    if not b then b = {} end
     if type(a) == "number" then
         return Vec2:new(a * b.x, a * b.y)
     elseif type(b) == "number" then
@@ -37,6 +40,7 @@ end
 
 -- Division (vector / scalar OR vector / vector)
 function Vec2.__div(a, b)
+    if not b then b = {} end
     if type(b) == "number" then
         return Vec2:new(a.x / b, a.y / b)
     else
@@ -51,6 +55,7 @@ end
 
 -- Equality (exact comparison)
 function Vec2.__eq(a, b)
+    if not b then b = {} end
     return a.x == b.x and a.y == b.y
 end
 

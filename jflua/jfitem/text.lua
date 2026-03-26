@@ -16,6 +16,7 @@ local Text = {
 
 -- CONSTRUCTOR
 function Text:new(props)
+    if not props then props = {} end
     return setmetatable({
         content     = props.content  or self.content,
         typeable    = props.typeable or self.typeable,

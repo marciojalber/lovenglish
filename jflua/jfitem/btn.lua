@@ -13,6 +13,7 @@ local Btn = {
 
 -- CONSTRUCTOR
 function Btn:new(props)
+    if not props then props = {} end
     return setmetatable({
         x = props.x or self.x,
         y = props.y or self.y,

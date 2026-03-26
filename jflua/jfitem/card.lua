@@ -12,6 +12,7 @@ local Card = {
 
 -- CONSTRUCTOR
 function Card:new(props)
+    if not props then props = {} end
     return setmetatable({
         x = props.x or self.x,
         y = props.y or self.y,
