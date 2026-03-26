@@ -1,8 +1,12 @@
+-- PROTO
 local Card = {
     kind = "card",
 }
 Card.__index = Card
 
+
+
+-- CONSTRUCTOR
 function Card:new(opts)
     local obj = setmetatable({
         w = opts.w or 100,
@@ -11,6 +15,9 @@ function Card:new(opts)
     return obj
 end
 
+
+
+-- DEFAULT METHODS
 function Card:Update(dt)
 end
 
@@ -21,4 +28,7 @@ function Card:Draw()
     love.graphics.rectangle("line", x, y, self.w, self.h)
 end
 
+
+
+-- RETURN
 return Card

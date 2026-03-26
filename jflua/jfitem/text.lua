@@ -1,3 +1,5 @@
+-- PROTO
+-- ← → ↑ ↓ ✩ ×
 local Text = {
     kind            = "text",
     content         = "Some text",
@@ -7,6 +9,9 @@ local Text = {
 }
 Text.__index = Text
 
+
+
+-- CONSTRUCTOR
 function Text:new(opts)
     local obj = setmetatable({
         content     = opts.content or self.content,
@@ -17,8 +22,9 @@ function Text:new(opts)
     return obj
 end
 
--- ← → ↑ ↓ ✩ ×
 
+
+-- DEFAULT METHODS
 function Text:Update(dt)
     self.blink_time = self.blink_time + dt
     if self.blink_time < 0.5 then return end
@@ -39,4 +45,7 @@ function Text:Draw()
     love.graphics.print(text, self.x, self.y)
 end
 
+
+
+-- RETURN
 return Text
