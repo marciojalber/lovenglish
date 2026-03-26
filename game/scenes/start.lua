@@ -1,5 +1,9 @@
+-- DEFINE THE SCENE
 local scene = {}
 
+
+
+-- LOAD SCENE
 function scene:load()
     win_w   = love.graphics.getWidth()
     win_h   = love.graphics.getHeight()
@@ -17,4 +21,7 @@ function scene:load()
     World:register(Card1, Text1, Text2, Text3)
 end
 
+
+
+-- RETURN DATA
 return scene

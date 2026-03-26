@@ -17,7 +17,7 @@ local World = {
 }
 
 function World:setup()
-    love.window.setTitle("Teste")
+    love.window.setTitle(Config.title)
     love.keyboard.setKeyRepeat(true)
 end
 
