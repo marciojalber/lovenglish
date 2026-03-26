@@ -4,11 +4,11 @@ local Window = {}
 
 -- METHODS
 function Window:centerX(w)
-    return w
+    return (love.graphics.getWidth() - w) / 2
 end
 
 function Window:centerY(h)
-    return h
+    return (love.graphics.getHeight() - h) / 2
 end
 
 

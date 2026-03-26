@@ -2,6 +2,8 @@
 local Card = {
     kind    = "card",
 
+    x       = 0,
+    y       = 0,
     w       = 150,
     h       = 100,
 }
@@ -11,6 +13,8 @@ local Card = {
 -- CONSTRUCTOR
 function Card:new(props)
     return setmetatable({
+        x = props.x or self.x,
+        y = props.y or self.y,
         w = props.w or self.w,
         h = props.h or self.h,
     }, {__index = self})
@@ -24,9 +28,7 @@ end
 
 function Card:Draw()
     -- love.graphics.setColor(1, 0, 1)
-    local x = (love.graphics.getWidth() - self.w) / 2
-    local y = (love.graphics.getHeight() - self.h) / 2
-    love.graphics.rectangle("line", x, y, self.w, self.h)
+    love.graphics.rectangle("line", self.x, self.y, self.w, self.h)
 end
 
 

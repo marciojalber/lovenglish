@@ -34,7 +34,7 @@ end
 
 function World:register(...)
     for _, item in pairs({...}) do
-        if item.kind == "card" then
+        if data.contains(item.kind, {"btn", "card"}) then
             table.insert(World.collections.shapes, item)
         elseif item.kind == "text" then
             table.insert(World.collections.texts, item)
