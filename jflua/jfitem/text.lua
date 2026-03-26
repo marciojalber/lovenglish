@@ -2,24 +2,27 @@
 -- ← → ↑ ↓ ✩ ×
 local Text = {
     kind            = "text",
-    content         = "Some text",
     blink_active    = false,
     blink_time      = 0,
+
+    content         = "Some text",
     typeable        = false,
     level           = "body", -- body, title, subtitle
+    x               = 0,
+    y               = 0,
 }
-Text.__index = Text
 
 
 
 -- CONSTRUCTOR
 function Text:new(opts)
     local obj = setmetatable({
-        content     = opts.content or self.content,
-        typeable   = opts.typeable or self.typeable,
-        x           = opts.x or self.x,
-        y           = opts.y or self.y,
-    }, self)
+        content     = opts.content  or self.content,
+        typeable    = opts.typeable or self.typeable,
+        level       = opts.level    or self.level,
+        x           = opts.x        or self.x,
+        y           = opts.y        or self.y,
+    }, {__index = self})
     return obj
 end
 

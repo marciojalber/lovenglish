@@ -1,17 +1,19 @@
 -- DEFINE DATA
 local Card = {
-    kind = "card",
+    kind    = "card",
+
+    w       = 150,
+    h       = 100,
 }
-Card.__index = Card
 
 
 
 -- CONSTRUCTOR
 function Card:new(opts)
     local obj = setmetatable({
-        w = opts.w or 100,
-        h = opts.h or 150,
-    }, self)
+        w = opts.w or self.w,
+        h = opts.h or self.h,
+    }, {__index = self})
     return obj
 end
 
