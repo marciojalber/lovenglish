@@ -22,8 +22,6 @@ local World = {
     ui      = {},
 }
 
-
-
 -- 
 function World:setup()
     love.window.setTitle(Config.title)

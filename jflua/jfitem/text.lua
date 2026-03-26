@@ -16,14 +16,13 @@ local Text = {
 
 -- CONSTRUCTOR
 function Text:new(opts)
-    local obj = setmetatable({
+    return setmetatable({
         content     = opts.content  or self.content,
         typeable    = opts.typeable or self.typeable,
         level       = opts.level    or self.level,
         x           = opts.x        or self.x,
         y           = opts.y        or self.y,
     }, {__index = self})
-    return obj
 end
 
 

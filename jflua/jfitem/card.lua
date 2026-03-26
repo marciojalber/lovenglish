@@ -10,11 +10,10 @@ local Card = {
 
 -- CONSTRUCTOR
 function Card:new(opts)
-    local obj = setmetatable({
+    return setmetatable({
         w = opts.w or self.w,
         h = opts.h or self.h,
     }, {__index = self})
-    return obj
 end
 
 
