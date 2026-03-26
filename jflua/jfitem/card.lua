@@ -1,4 +1,4 @@
--- PROTO
+-- DEFINE DATA
 local Card = {
     kind = "card",
 }

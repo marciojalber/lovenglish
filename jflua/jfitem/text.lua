@@ -1,11 +1,12 @@
--- PROTO
+-- DEFINE DATA
 -- ← → ↑ ↓ ✩ ×
 local Text = {
     kind            = "text",
     content         = "Some text",
     blink_active    = false,
     blink_time      = 0,
-    digitable       = false,
+    typeable        = false,
+    level           = "body", -- body, title, subtitle
 }
 Text.__index = Text
 
@@ -15,7 +16,7 @@ Text.__index = Text
 function Text:new(opts)
     local obj = setmetatable({
         content     = opts.content or self.content,
-        digitable   = opts.digitable or self.digitable,
+        typeable   = opts.typeable or self.typeable,
         x           = opts.x or self.x,
         y           = opts.y or self.y,
     }, self)
@@ -36,7 +37,7 @@ end
 function Text:Draw()
     love.graphics.setColor(1, 1, 1)
     local text = self.content
-    if self.digitable then
+    if self.typeable then
         text = ":: " .. text
         if self.blink_active then
             text = text .. "|"

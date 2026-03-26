@@ -1,3 +1,9 @@
+-- DEPENDENCIES
+utf8    = require("utf8")
+
+
+
+-- DATA
 local World = {
     -- Itens
     collections = {
@@ -5,17 +11,20 @@ local World = {
         texts   = {},
     },
 
-    -- layers
-    LBack0  = 0,
-    LBack1  = 1,
-    LBack2  = 2,
-    LUi     = 3,
-    LTop    = 4,
+    -- Scene layers
+    LBack0  = 2,
+    LBack1  = 3,
+    LBack2  = 4,
     LWorld  = 5,
     
+    -- 
     scenes  = {},
+    ui      = {},
 }
 
+
+
+-- 
 function World:setup()
     love.window.setTitle(Config.title)
     love.keyboard.setKeyRepeat(true)

@@ -1,4 +1,4 @@
--- DEFINE THE GAME CONFIG
+-- DEFINE DATA
 local config = {
     version     = "0.0.1",
     title       = "LovEnglish",
