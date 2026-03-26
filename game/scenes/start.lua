@@ -15,6 +15,8 @@ function scene:load()
     card_h  = 100
     
     Card1   = Card:new({w = card_w, h = card_h})
+    Card2   = Card:new({w = 50, h = 20})
+
     Text1   = Text:new({content = "CHOOSE YOUR GAME", x = x_half - card_w / 2 + 10, y = y_half - card_h / 2 + 10})
     Text2   = Text:new({content = "Command line:", x = 10, y = win_h - 50})
     Text3   = Text:new({content = "", x = 10, y = win_h - 30, typeable = true})
