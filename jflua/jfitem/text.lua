@@ -15,13 +15,13 @@ local Text = {
 
 
 -- CONSTRUCTOR
-function Text:new(opts)
+function Text:new(props)
     return setmetatable({
-        content     = opts.content  or self.content,
-        typeable    = opts.typeable or self.typeable,
-        level       = opts.level    or self.level,
-        x           = opts.x        or self.x,
-        y           = opts.y        or self.y,
+        content     = props.content  or self.content,
+        typeable    = props.typeable or self.typeable,
+        level       = props.level    or self.level,
+        x           = props.x        or self.x,
+        y           = props.y        or self.y,
     }, {__index = self})
 end
 
