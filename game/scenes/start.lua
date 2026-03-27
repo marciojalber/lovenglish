@@ -22,6 +22,14 @@ function scene:load()
         color       = {0.2, 0.25, 0.3},
     })
 
+    local Btn2  = Btn:new({
+        x           = 80,
+        y           = 10,
+        w           = 100,
+        h           = 30,
+        color       = {0.2, 0.25, 0.3},
+    })
+
     function Btn1:onHover(event)
         self.color  = {0.1, 0.45, 0.5}
     end
@@ -48,7 +56,7 @@ function scene:load()
         offsetY     = -10,
         typeable    = true,
     })
-    World:register(Card1, Btn1, Text1, Text2, Text3)
+    World:register(Card1, Btn1, Btn2, Text1, Text2, Text3)
 end
 
 

@@ -11,6 +11,9 @@ local World = {
         texts   = {},
     },
 
+    catchHover  = nil,
+    hoveringID  = nil,
+
     -- Scene layers
     LBack0  = 2,
     LBack1  = 3,
@@ -41,6 +44,8 @@ function World:register(...)
 end
 
 function love.update(dt)
+    World.catchHover = true
+    
     for _, items in pairs(World.collections) do
         for _, item in pairs(items) do
             item:Update(dt)
