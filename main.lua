@@ -20,3 +20,5 @@ function love.load()
     World:loadScenes()
     World.scenes.start.load()
 end
+
+-- love.window.close()
