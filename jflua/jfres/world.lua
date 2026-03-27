@@ -27,6 +27,7 @@ local World = {
 -- METHODS
 function World:loadScenes()
     self.scenes.start = require("game.scenes.start")
+    self.scenes.ui    = require("game.scenes.ui")
 end
 
 function World:register(...)
@@ -54,6 +55,8 @@ function love.draw()
             item:Draw()
         end
     end
+
+    local m_x, m_y = love.mouse.getPosition()
 end
 
 function love.textinput(t)

@@ -34,6 +34,7 @@ function love.load()
     Window:setup()
     World:loadScenes()
     World.scenes.start.load()
+    World.scenes.ui.load()
 end
 
 -- love.window.close()

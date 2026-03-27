@@ -13,7 +13,6 @@ setmetatable(Text, {__index = BaseItem})
 function Text:new(props)
     if not props then props = {} end
     local obj = setmetatable({
-        content     = props.content  or "",
         typeable    = props.typeable or false,
         level       = props.level    or "body", -- body, title, subtitle,
         alignX      = props.alignX   or nil,
@@ -22,8 +21,9 @@ function Text:new(props)
         y           = props.y        or 0,
         offsetX     = props.offsetX  or 0,
         offsetY     = props.offsetY  or 0,
+        color       = props.color    or {1,1,1},
     }, {__index = self})
-    obj.w, obj.h = obj:measure()
+    obj:setContent(props.content  or "")
     return obj
 end
 
@@ -38,24 +38,37 @@ function Text:measure()
     return width, height
 end
 
+function Text:setContent(content)
+    self.content    = content
+    self.w, self.h  = self:measure()
+end
+
+function Text:Update(dt)
+end
+
 function Text:Update(dt)
     self:BaseUpdates(dt)
-    self.blink_time = self.blink_time + dt
-    if self.blink_time < 0.5 then return end
+    
+    self.blink_time     = self.blink_time + dt
+    if self.blink_time  < 0.5 then
+        return
+    end
 
-    self.blink_time = 0
-    self.blink_active = not self.blink_active
+    self.blink_time     = 0
+    self.blink_active   = not self.blink_active
 end
 
 function Text:Draw()
-    love.graphics.setColor(1, 1, 1)
     local text = self.content
+    
     if self.typeable then
         text = ":: " .. text
         if self.blink_active then
             text = text .. "|"
         end
     end
+    
+    love.graphics.setColor(self.color[1],self.color[2],self.color[3])
     love.graphics.print(text, self.x + self.offsetX, self.y + self.offsetY)
 end
 
