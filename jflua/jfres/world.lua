@@ -22,12 +22,9 @@ local World = {
     ui      = {},
 }
 
--- 
-function World:setup()
-    love.window.setTitle(Config.title)
-    love.keyboard.setKeyRepeat(true)
-end
 
+
+-- METHODS
 function World:loadScenes()
     self.scenes.start = require("game.scenes.start")
 end
@@ -60,8 +57,8 @@ function love.draw()
 end
 
 function love.textinput(t)
-    for _, item in pairs(texts) do
-        if item.digitable then
+    for _, item in pairs(World.collections.texts) do
+        if item.typeable then
             item.content = item.content .. t
         end
     end
@@ -70,8 +67,8 @@ end
 function love.keypressed(key)
     if key == "backspace" then
         -- remove last character (UTF-8 safe)
-        for _, item in pairs(texts) do
-            if item.digitable then
+        for _, item in pairs(World.collections.texts) do
+            if item.typeable then
                 local byteoffset = utf8.offset(item.content, -1)
                 if byteoffset then
                     item.content = string.sub(item.content, 1, byteoffset - 1)

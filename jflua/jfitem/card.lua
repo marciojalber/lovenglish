@@ -1,12 +1,8 @@
 -- DEFINE DATA
 local Card = {
     kind    = "card",
-
-    x       = 0,
-    y       = 0,
-    w       = 150,
-    h       = 100,
 }
+setmetatable(Card, {__index = BaseItem})
 
 
 
@@ -14,10 +10,14 @@ local Card = {
 function Card:new(props)
     if not props then props = {} end
     return setmetatable({
-        x = props.x or self.x,
-        y = props.y or self.y,
-        w = props.w or self.w,
-        h = props.h or self.h,
+        alignX  = props.alignX  or self.alignX,
+        alignY  = props.alignY  or self.alignY,
+        x       = props.x       or 0,
+        y       = props.y       or 0,
+        offsetX = props.offsetX or 0,
+        offsetY = props.offsetY or 0,
+        w       = props.w       or 0,
+        h       = props.h       or 0,
     }, {__index = self})
 end
 
@@ -25,6 +25,7 @@ end
 
 -- DEFAULT METHODS
 function Card:Update(dt)
+    self:BaseUpdates(dt)
 end
 
 function Card:Draw()

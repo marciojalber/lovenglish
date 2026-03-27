@@ -4,32 +4,42 @@ local Text = {
     kind            = "text",
     blink_active    = false,
     blink_time      = 0,
-
-    content         = "Some text",
-    typeable        = false,
-    level           = "body", -- body, title, subtitle
-    x               = 0,
-    y               = 0,
 }
+setmetatable(Text, {__index = BaseItem})
 
 
 
 -- CONSTRUCTOR
 function Text:new(props)
     if not props then props = {} end
-    return setmetatable({
-        content     = props.content  or self.content,
-        typeable    = props.typeable or self.typeable,
-        level       = props.level    or self.level,
-        x           = props.x        or self.x,
-        y           = props.y        or self.y,
+    local obj = setmetatable({
+        content     = props.content  or "",
+        typeable    = props.typeable or false,
+        level       = props.level    or "body", -- body, title, subtitle,
+        alignX      = props.alignX   or nil,
+        alignY      = props.alignY   or nil,
+        x           = props.x        or 0,
+        y           = props.y        or 0,
+        offsetX     = props.offsetX  or 0,
+        offsetY     = props.offsetY  or 0,
     }, {__index = self})
+    obj.w, obj.h = obj:measure()
+    return obj
 end
 
 
 
 -- DEFAULT METHODS
+function Text:measure()
+    local font      = love.graphics.getFont()
+    local width     = font:getWidth(self.content)
+    local height    = font:getHeight()
+
+    return width, height
+end
+
 function Text:Update(dt)
+    self:BaseUpdates(dt)
     self.blink_time = self.blink_time + dt
     if self.blink_time < 0.5 then return end
 
@@ -46,7 +56,7 @@ function Text:Draw()
             text = text .. "|"
         end
     end
-    love.graphics.print(text, self.x, self.y)
+    love.graphics.print(text, self.x + self.offsetX, self.y + self.offsetY)
 end
 
 

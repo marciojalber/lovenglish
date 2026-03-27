@@ -18,16 +18,31 @@ function scene:load()
     local card_h  = 100
     
     Card1   = Card:new({
-        x   = Window:centerX(card_w),
-        y   = Window:centerY(card_h),
-        w   = card_w,
-        h   = card_h}
-    )
+        alignX  = "center",
+        alignY  = "center",
+        w       = card_w,
+        h       = card_h,
+    })
     Btn1    = Btn:new({x = 10, y = 10, w = 100, h = 30})
 
-    Text1   = Text:new({content = "CHOOSE YOUR GAME", x = x_half - card_w / 2 + 10, y = y_half - card_h / 2 + 10})
-    Text2   = Text:new({content = "Command line:", x = 10, y = win_h - 50})
-    Text3   = Text:new({content = "", x = 10, y = win_h - 30, typeable = true})
+    Text1   = Text:new({
+        content = "CHOOSE YOUR GAME",
+        alignX  = "center",
+        alignY  = "center",
+    })
+    Text2   = Text:new({
+        content = "Command line:",
+        alignY  = "bottom",
+        offsetX = 10,
+        offsetY = -30,
+    })
+    Text3   = Text:new({
+        content     = "",
+        alignY      = "bottom",
+        offsetX     = 10,
+        offsetY     = -10,
+        typeable    = true,
+    })
     World:register(Card1, Btn1, Text1, Text2, Text3)
 end
 
