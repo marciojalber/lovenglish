@@ -13,6 +13,7 @@ setmetatable(Text, {__index = BaseItem})
 function Text:new(props)
     if not props then props = {} end
     local obj = setmetatable({
+        id          = World:nextID(),
         typeable    = props.typeable or false,
         level       = props.level    or "body", -- body, title, subtitle,
         alignX      = props.alignX   or nil,

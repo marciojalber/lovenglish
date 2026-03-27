@@ -38,6 +38,14 @@ function scene:load()
         self.color  = {0.2, 0.25, 0.3}
     end
 
+    function Btn2:onHover(event)
+        self.color  = {0.1, 0.45, 0.5}
+    end
+
+    function Btn2:onBlur()
+        self.color  = {0.2, 0.25, 0.3}
+    end
+
     local Text1 = Text:new({
         content = "CHOOSE YOUR GAME",
         alignX  = "center",

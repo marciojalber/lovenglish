@@ -10,6 +10,7 @@ setmetatable(Card, {__index = BaseItem})
 function Card:new(props)
     if not props then props = {} end
     return setmetatable({
+        id      = World:nextID(),
         alignX  = props.alignX  or self.alignX,
         alignY  = props.alignY  or self.alignY,
         x       = props.x       or 0,

@@ -1,4 +1,5 @@
 -- DEFINE DATA
+World   = require("jflua.jfres.world")
 local Btn = {
     kind    = "btn",
 }
@@ -8,16 +9,19 @@ setmetatable(Btn, {__index = BaseItem})
 -- CONSTRUCTOR
 function Btn:new(props)
     if not props then props = {} end
+
     return setmetatable({
-        alignX  = props.alignX  or self.alignX,
-        alignY  = props.alignY  or self.alignY,
-        x       = props.x       or self.x,
-        y       = props.y       or self.y,
-        offsetX = props.offsetX or 0,
-        offsetY = props.offsetY or 0,
-        w       = props.w       or self.w,
-        h       = props.h       or self.h,
-        color   = props.color   or {0.8, 0.8, 0.8},
+        id          = World:nextID(),
+        hoverable   = props.alignX  or true,
+        alignX      = props.alignX  or self.alignX,
+        alignY      = props.alignY  or self.alignY,
+        x           = props.x       or self.x,
+        y           = props.y       or self.y,
+        offsetX     = props.offsetX or 0,
+        offsetY     = props.offsetY or 0,
+        w           = props.w       or self.w,
+        h           = props.h       or self.h,
+        color       = props.color   or {0.8, 0.8, 0.8},
     }, {__index = self})
 end
 
