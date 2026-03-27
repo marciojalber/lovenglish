@@ -62,7 +62,7 @@ function scene:load()
         self:BaseUpdates(dt)
     end
 
-    World:register(Text1, Text2, Text3)
+    World:add(Text1, Text2, Text3)
 end
 
 

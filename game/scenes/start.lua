@@ -64,7 +64,7 @@ function scene:load()
         offsetY     = -10,
         typeable    = true,
     })
-    World:register(Card1, Btn1, Btn2, Text1, Text2, Text3)
+    World:add(Card1, Btn1, Btn2, Text1, Text2, Text3)
 end
 
 

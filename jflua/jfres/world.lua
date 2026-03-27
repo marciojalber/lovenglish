@@ -6,7 +6,8 @@ utf8    = require("utf8")
 -- DATA
 local World = {
     -- Itens
-    items       = {
+    items       = {}
+    itemsCateg  = {
         shapes  = {},
         texts   = {},
     },
@@ -43,16 +44,24 @@ function World:loadScenes()
     self.scenes.ui    = require("game.scenes.ui")
 end
 
-function World:register(...)
+function World:add(...)
+    World.items[item.id] = item
+
     for _, item in pairs({...}) do
         if data.contains(item.kind, {"btn", "card"}) and World.items.shapes[item.id] == nil then
-            World.items.shapes[item.id] = item
-            World.itemsCount.shapes     = World.itemsCount.shapes + 1
+            World.itemsCateg.shapes[item.id]    = item
+            World.itemsCount.shapes             = World.itemsCount.shapes + 1
         elseif item.kind == "text" and World.items.texts[item.id] == nil then
-            World.items.texts[item.id]  = item
-            World.itemsCount.texts      = World.itemsCount.texts + 1
+            World.itemsCateg.texts[item.id]     = item
+            World.itemsCount.texts              = World.itemsCount.texts + 1
         end
     end
+end
+
+function World:remove(id)
+    local last          = #self.items
+    self.items[id]      = self.items[last]
+    self.items[last]    = nil
 end
 
 function love.update(dt)
@@ -115,3 +124,22 @@ end
 
 -- RETURN DATA
 return World
+
+--[[
+    -- entity.priority = 500 -> Player + clickables in the front
+
+    if world.dirtySort then
+        table.sort(...)
+        world.dirtySort = false
+    end
+
+    table.sort(world.drawList, function(a, b)
+        if a.z ~= b.z then
+            return a.z < b.z
+        end
+        if a.priority ~= b.priority then
+            return a.priority < b.priority
+        end
+        return a.id < b.id
+    end)
+]]
