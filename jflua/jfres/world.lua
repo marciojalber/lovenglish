@@ -75,16 +75,18 @@ function World:remove(id)
         return
     end
     
-    local idx       = self.items[id].drawOrder
+    local idx       = item.drawOrder
 
     if idx then
         local last  = #self.itemsCateg.toDraw
+
         if idx ~= last then
-            self.orderIsDirty                       = true
             self.itemsCateg.toDraw[idx]             = self.itemsCateg.toDraw[last]
             self.itemsCateg.toDraw[idx].drawOrder   = idx
-            self.itemsCateg.toDraw[last]            = nil
         end
+
+        self.orderIsDirty                       = true
+        self.itemsCateg.toDraw[last]            = nil
     end
 
     self.items[id] = nil
@@ -121,41 +123,113 @@ function love.update(dt)
 end
 
 function World:update(dt)
-    self.catchHover = true
-    
+    updateLogic(self, dt)
+    updateDrawOrder(self, dt)
+    resolveHover(self, dt)
+end
+
+function updateLogic(self, dt)
     for _, item in pairs(self.items) do
-        item:Update(dt)
+        if item.Update then
+            item:Update(dt)
+        end
     end
+end
+
+function updateDrawOrder(self, dt)
+    if self.orderIsDirty then
+        table.sort(self.itemsCateg.toDraw, function(a, b)
+            if a.zIndex ~= b.zIndex then
+                return a.zIndex < b.zIndex
+            end
+            return a.id < b.id
+        end)
     
+        -- only if you use index optimization
+        for i = 1, #self.itemsCateg.toDraw do
+            self.itemsCateg.toDraw[i].drawOrder = i
+        end
+    
+        self.orderIsDirty = false
+    end
+end
+
+function resolveHover(self, dt)
+    -- @todo Test, validate and apply
+    --[[
+        -- FIRST VERSION
+        for i = #self.itemsCateg.toDraw, 1, -1 do
+            local item = self.itemsCateg.toDraw[i]
+
+            if item:CheckHover() then
+                if self.hoveringID ~= item.id then
+                    -- blur old
+                    local old = self.items[self.hoveringID]
+                    if old and old.onBlur then
+                        old:onBlur(dt)
+                    end
+
+                    -- focus new
+                    self.hoveringID = item.id
+                    if item.onFocus then
+                        item:onFocus(dt)
+                    end
+                end
+
+                self.catchHover = false
+                break
+            end
+        end    
+
+
+        -- SECOND VERSION
+        local newHoverID = nil
+
+        -- top-most first
+        for i = #self.itemsCateg.toDraw, 1, -1 do
+            local item = self.itemsCateg.toDraw[i]
+
+            if item.CheckHover and item:CheckHover() then
+                newHoverID = item.id
+                break
+            end
+        end
+
+        -- no change → do nothing
+        if newHoverID == self.hoveringID then
+            return
+        end
+
+        -- blur old
+        if self.hoveringID then
+            local old = self.items[self.hoveringID]
+            if old and old.onBlur then
+                old:onBlur(dt)
+            end
+        end
+
+        -- focus new
+        self.hoveringID = newHoverID
+
+        if newHoverID then
+            local item = self.items[newHoverID]
+            if item and item.onFocus then
+                item:onFocus(dt)
+            end
+        end
+    ]]
+    self.catchHover = true
     if self.catchHover == true then
         if self.hoveringID then
             local old_id    = self.hoveringID
             local item      = self.items[old_id]
             self.hoveringID = nil
 
-            if item and item[old_id].onBlur then
-                item[old_id]:onBlur(dt)
+            if item and item.onBlur then
+                item:onBlur(dt)
             end
         end
     end
-
-    if not self.orderIsDirty then
-        return
-    end
-
-    table.sort(self.itemsCateg.toDraw, function(a, b)
-        if a.zIndex ~= b.zIndex then
-            return a.zIndex < b.zIndex
-        end
-        return a.id < b.id
-    end)
-
-    -- only if you use index optimization
-    for i = 1, #self.itemsCateg.toDraw do
-        self.itemsCateg.toDraw[i].drawOrder = i
-    end
-
-    self.orderIsDirty = false
 end
 
 function love.draw()
