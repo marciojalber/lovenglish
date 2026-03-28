@@ -35,7 +35,7 @@ function scene:load()
 
     function Text2:Update()
         local content = "Shapes (" .. World.itemsCount.shapes .. "):"
-        for idx in pairs(World.items.shapes) do
+        for idx in pairs(World.itemsCateg.shapes) do
             content = content .. " " .. idx
         end
         
@@ -54,7 +54,7 @@ function scene:load()
 
     function Text3:Update()
         local content = "Texts (" .. World.itemsCount.texts .. "):"
-        for idx in pairs(World.items.texts) do
+        for idx in pairs(World.itemsCateg.texts) do
             content = content .. " " .. idx
         end
         
