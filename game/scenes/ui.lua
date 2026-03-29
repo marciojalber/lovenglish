@@ -1,4 +1,5 @@
 -- DEFINE DATA
+local    Window      = require("game.window")
 local scene = {}
 
 
@@ -7,10 +8,15 @@ local scene = {}
 function scene:load()
     local Text1 = Text:new({
         content = "Window status",
-        alignX  = "right",
-        alignY  = "bottom",
-        offsetX = -10,
-        offsetY = -10,
+        pos     = {
+            offsetX = -10,
+            offsetY = -10,
+        },
+        align   = {
+            ref = Window,
+            x   = "right",
+            y   = "bottom",
+        },
         color   = {0.4, 0.4, 0.4},
     })
 
@@ -26,18 +32,26 @@ function scene:load()
 
     local Text2 = Text:new({
         content = "Shapes",
-        alignX  = "right",
-        alignY  = "bottom",
-        offsetX = -10,
-        offsetY = -30,
+        pos     = {
+            offsetX = -10,
+            offsetY = -30,
+        },
+        align   = {
+            ref = Window,
+            x   = "right",
+            y   = "bottom",
+        },
         color   = {0.4, 0.4, 0.4},
     })
 
     function Text2:Update()
-        local content = "Shapes (" .. World.itemsCount.shapes .. "):"
-        for idx in pairs(World.itemsCateg.shapes) do
-            content = content .. " " .. idx
+        local tot_items = 0
+        local content = ""
+        for idx in pairs(World.itemsCateg.toDraw) do
+            content     = content .. " " .. idx
+            tot_items  = tot_items + 1
         end
+        content = "To draw (" .. tot_items .. "):" .. content
         
         self:setContent(content)
         self:BaseUpdates(dt)
@@ -45,18 +59,26 @@ function scene:load()
 
     local Text3 = Text:new({
         content = "texts",
-        alignX  = "right",
-        alignY  = "bottom",
-        offsetX = -10,
-        offsetY = -50,
+        pos     = {
+            offsetX = -10,
+            offsetY = -50,
+        },
+        align   = {
+            ref = Window,
+            x   = "right",
+            y   = "bottom",
+        },
         color   = {0.4, 0.4, 0.4},
     })
 
     function Text3:Update()
-        local content = "Texts (" .. World.itemsCount.texts .. "):"
+        local tot_items = 0
+        local content = ""
         for idx in pairs(World.itemsCateg.texts) do
             content = content .. " " .. idx
+            tot_items  = tot_items + 1
         end
+        content = "Texts (" .. tot_items .. "):" .. content
         
         self:setContent(content)
         self:BaseUpdates(dt)

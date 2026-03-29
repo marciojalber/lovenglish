@@ -33,16 +33,14 @@ local drawable  = {
     text        = true,
 }
 
-
 -- METHODS
 function World:nextID()
     self.lastID = self.lastID + 1
     return self.lastID
 end
 
-function World:loadScenes()
-    self.scenes.start = require("game.scenes.start")
-    self.scenes.ui    = require("game.scenes.ui")
+function World:addScene( scene )
+    self.scenes[scene] = require("game.scenes." .. scene)
 end
 
 function World:add(...)
@@ -118,7 +116,20 @@ function love.keypressed(key)
     end
 end
 
+function love.mousepressed(x, y, button, istouch, presses)
+    if World.hoveringID and World.items[World.hoveringID] and World.items[World.hoveringID].onClick then
+        World.items[World.hoveringID].onClick(x, y, button, istouch, presses)
+    else
+        Window:onClick(x, y, button, istouch, presses)
+    end
+end
+
 function love.update(dt)
+    --[[
+    if love.mouse.isDown(1) then
+        print("Holding left mouse")
+    end
+    ]]
     World:update(dt)
 end
 
@@ -155,85 +166,53 @@ function updateDrawOrder(self, dt)
 end
 
 function resolveHover(self, dt)
-    -- @todo Test, validate and apply
-    --[[
-        -- FIRST VERSION
-        for i = #self.itemsCateg.toDraw, 1, -1 do
-            local item = self.itemsCateg.toDraw[i]
+    local newHoverID    = nil
+    local mx, my        = love.mouse.getPosition()
 
-            if item:CheckHover() then
-                if self.hoveringID ~= item.id then
-                    -- blur old
-                    local old = self.items[self.hoveringID]
-                    if old and old.onBlur then
-                        old:onBlur(dt)
-                    end
+    -- top-most first
+    for i = #self.itemsCateg.toDraw, 1, -1 do
+        local item = self.itemsCateg.toDraw[i]
 
-                    -- focus new
-                    self.hoveringID = item.id
-                    if item.onFocus then
-                        item:onFocus(dt)
-                    end
-                end
+        if item.hoverable then
+            local x0, y0    = item.pos.x + item.pos.offsetX, item.pos.y + item.pos.offsetY
+            local x1, y1    = x0 + item.dim.w, y0 + item.dim.h
+            local inside_x  = mx >= x0 and mx <= x1
+            local inside_y  = my >= y0 and my <= y1
 
-                self.catchHover = false
-                break
-            end
-        end    
-
-
-        -- SECOND VERSION
-        local newHoverID = nil
-
-        -- top-most first
-        for i = #self.itemsCateg.toDraw, 1, -1 do
-            local item = self.itemsCateg.toDraw[i]
-
-            if item.CheckHover and item:CheckHover() then
+            if inside_x and inside_y then
                 newHoverID = item.id
                 break
             end
         end
+    end
 
-        -- no change → do nothing
-        if newHoverID == self.hoveringID then
-            return
+    -- no change → do nothing
+    if newHoverID == self.hoveringID then
+        return
+    end
+
+    -- blur old
+    if self.hoveringID then
+        local old = self.items[self.hoveringID]
+        if old and old.onBlur then
+            old:onBlur(dt)
         end
+    end
 
-        -- blur old
-        if self.hoveringID then
-            local old = self.items[self.hoveringID]
-            if old and old.onBlur then
-                old:onBlur(dt)
-            end
-        end
+    -- focus new
+    self.hoveringID = newHoverID
 
-        -- focus new
-        self.hoveringID = newHoverID
-
-        if newHoverID then
-            local item = self.items[newHoverID]
-            if item and item.onFocus then
-                item:onFocus(dt)
-            end
-        end
-    ]]
-    self.catchHover = true
-    if self.catchHover == true then
-        if self.hoveringID then
-            local old_id    = self.hoveringID
-            local item      = self.items[old_id]
-            self.hoveringID = nil
-
-            if item and item.onBlur then
-                item:onBlur(dt)
-            end
+    if newHoverID then
+        local item = self.items[newHoverID]
+        if item and item.onHover then
+            item:onHover(dt)
         end
     end
 end
 
 function love.draw()
-    -- love.graphics.setBackgroundColor(0.1, 0.2, 0.3)
+    local bgc = Window.defaultBg
+    love.graphics.setBackgroundColor(bgc[1], bgc[2], bgc[3])
     local drawList = World.itemsCateg.toDraw
     for i = 1, #drawList do
         drawList[i]:Draw()
