@@ -7,7 +7,11 @@ local Text = {
 }
 setmetatable(Text, {__index = BaseItem})
 
+local fonts = {}
 
+for i, font in pairs(Config.fonts) do
+    fonts[i] = love.graphics.newFont(font.size)
+end
 
 -- CONSTRUCTOR
 function Text:new(props)
@@ -30,9 +34,9 @@ function Text:new(props)
             h       = 0,
         },
         color       = props.color       or {1,1,1},
-        font        = props.font        or Config.fonts.default,
+        font        = fonts[props.font  or "default"],
     }, {__index = self})
-    obj:setContent(props.content  or "")
+    obj:setContent(props.content or "")
     return obj
 end
 

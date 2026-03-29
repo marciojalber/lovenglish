@@ -1,36 +1,51 @@
 -- DEFINE DATA
-local config = {
-    game        = {
-        version     = "0.0.1",
-        title       = "LovEnglish",
-        author      = "Márcio Jalber",
-        createdAt   = "2026-03-26",
+local game      = {
+    version     = "0.0.1",
+    title       = "LovEnglish",
+    author      = "Márcio Jalber",
+    createdAt   = "2026-03-26",
+}
+
+local fonts     = {
+    default     = {size = 12},
+    body        = {size = 12},
+    subtitle    = {size = 16},
+    title       = {size = 24},
+}
+
+local window    = {
+    dim         = {
+        w       = 800,
+        h       = 600,
     },
-    fonts       = {
-        default     = love.graphics.newFont(12),
-        body        = love.graphics.newFont(12),
-        subtitle    = love.graphics.newFont(16),
-        title       = love.graphics.newFont(24),
+    -- defaultBg   = {},
+}
+
+local audio     = {
+    volume      = {
+        master  = 1.0,
+        music   = 0.4,
+        env     = 0.5,
+        sfx     = 1.0,
+        ui      = 1.0,
     },
-    window      = {
-        dim         = {
-            w       = 800,
-            h       = 600,
+    
+    sources     = {
+        music   = {
+            begining    = {"stream", "music/begining.mp3"},
         },
-        -- defaultBg   = {},
-    },
-    soundCtrl   = {
-        volumeMs    = 0.5,
-        volumeFx    = 0.5,
-    },
-    musics      = {
-        beginig     = love.audio.newSource("assets/music/begining.mp3", "static"),
-    },
-    sounds      = {
-        hover1      = love.audio.newSource("assets/sounds/select_change.mp3", "static"),
+        sfx     = {
+            hover1      = {"static", "sounds/select_change.mp3"},
+        },
     },
 }
 
 
+
 -- RETURN DATA
-return config
+return {
+    game    = game,
+    fonts   = fonts,
+    window  = window,
+    audio   = audio,
+}

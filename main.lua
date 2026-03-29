@@ -4,7 +4,7 @@
     Config      = require("game.config")
     Window      = require("game.window")
     World       = require("jflua.jfres.world")
-    Sound       = require("jflua.jfres.sound_control")
+    Audio       = require("jflua.jfres.audio")
     data        = require("jflua.jfdata.data")
 
     -- Extra
@@ -15,7 +15,7 @@
 
 
     
-    -- START GAME
+-- START GAME
 function love.load()
     Window:setup()
     World:addScene("start")
@@ -23,5 +23,3 @@ function love.load()
     World.scenes.start.load()
     World.scenes.ui.load()
 end
-
--- love.window.close()

@@ -6,6 +6,11 @@ local scene = {}
 
 -- LOAD SCENE
 function scene:load()
+    local music         = Audio:load("music", "begining")
+    music.source:play()
+    
+    local sfx_houver    = Audio:load("sfx", "hover1")
+
     local Card1 = Card:new({
         align   = {
             ref = Window,
@@ -28,8 +33,7 @@ function scene:load()
         pos     = {
             offsetY = -60,
         },
-        style   = "title",
-        font    = Config.fonts.title,
+        font    = "title",
     })
 
     local Btn1  = Btn:new({
@@ -69,8 +73,7 @@ function scene:load()
         self.scaleX = 1.1
         self.scaleY = 1.1
 
-        local sound = Sound:fx("hover1")
-        sound:play()
+        Audio:play(sfx_houver)
     end
 
     function Btn1:onBlur()
@@ -84,8 +87,7 @@ function scene:load()
         self.scaleX = 1.1
         self.scaleY = 1.1
 
-        local sound = Sound:fx("hover1")
-        sound:play()
+        Audio:play(sfx_houver)
     end
 
     function Btn2:onBlur()

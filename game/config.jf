@@ -1,0 +1,43 @@
+// Config:game Config:fonts
+set @game {
+    version     "0.0.1"
+    title       "LovEnglish"
+    author      "Márcio Jalber"
+    createdAt   "2026-03-26"
+}
+
+set @fonts {
+    default     12
+    body        12
+    subtitle    16
+    title       24
+}
+
+set @window  {
+    dim {
+        w       800
+        h       600
+    }
+}
+
+set @audio {
+    volume {
+        master  1.0
+        music   0.4
+        env     0.5
+        sfx     1.0
+        ui      1.0
+    }
+    
+    sources {
+        ms_beginig [ "stream" "music/begining.mp3"       ]
+        sfx_hover1 [ "static" "sounds/select_change.mp3" ]
+    }
+}
+
+return {
+    game    @game
+    fonts   @fonts
+    window  @window
+    audio   @audio
+}
