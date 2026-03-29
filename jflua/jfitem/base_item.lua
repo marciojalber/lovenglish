@@ -13,17 +13,32 @@ end
 -- METHODS
 function BaseItem:BaseUpdates(dt)
     if self.align.ref and self.align.ref.dim then
+        local x = 0
+        if self.align.ref.pos and self.align.ref.pos.x then
+            x = self.align.ref.pos.x
+        end
+        if self.align.ref.pos and self.align.ref.pos.offsetX then
+            x = x + self.align.ref.pos.offsetX
+        end
 
         if self.align.x == "center" then
-            self.pos.x   = (self.align.ref.dim.w - self.dim.w) / 2
+            self.pos.x   = (self.align.ref.dim.w - self.dim.w) / 2 + x
         elseif self.align.x == "right" then
-            self.pos.x   = self.align.ref.dim.w - self.dim.w
+            self.pos.x   = self.align.ref.dim.w + x - self.dim.w
         end
         
+        local y = 0
+        if self.align.ref.pos and self.align.ref.pos.y then
+            y = self.align.ref.pos.y
+        end
+        if self.align.ref.pos and self.align.ref.pos.offsetY then
+            y = y + self.align.ref.pos.offsetY
+        end
+
         if self.align.y == "center" then
-            self.pos.y   = (self.align.ref.dim.h - self.dim.h) / 2
+            self.pos.y   = (self.align.ref.dim.h - self.dim.h) / 2 + y
         elseif self.align.y == "bottom" then
-            self.pos.y   = self.align.ref.dim.h - self.dim.h
+            self.pos.y   = self.align.ref.dim.h + y - self.dim.h
         end
 
     end

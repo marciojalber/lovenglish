@@ -7,6 +7,7 @@ local config = {
         createdAt   = "2026-03-26",
     },
     fonts       = {
+        default     = love.graphics.newFont(12),
         body        = love.graphics.newFont(12),
         subtitle    = love.graphics.newFont(16),
         title       = love.graphics.newFont(24),

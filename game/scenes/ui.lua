@@ -17,7 +17,7 @@ function scene:load()
             x   = "right",
             y   = "bottom",
         },
-        color   = {0.4, 0.4, 0.4},
+        color   = {0.6, 0.7, 0.8},
     })
 
     function Text1:Update()
@@ -41,7 +41,7 @@ function scene:load()
             x   = "right",
             y   = "bottom",
         },
-        color   = {0.4, 0.4, 0.4},
+        color   = {0.6, 0.7, 0.8},
     })
 
     function Text2:Update()
@@ -68,7 +68,7 @@ function scene:load()
             x   = "right",
             y   = "bottom",
         },
-        color   = {0.4, 0.4, 0.4},
+        color   = {0.6, 0.7, 0.8},
     })
 
     function Text3:Update()
@@ -84,7 +84,35 @@ function scene:load()
         self:BaseUpdates(dt)
     end
 
-    World:add(Text1, Text2, Text3)
+    local Text4 = Text:new({
+        content = "Command line:",
+        align   = {
+            ref = Window,
+            y   = "bottom",
+        },
+        pos     = {
+            offsetX = 10,
+            offsetY = -30,
+        },
+    })
+    local Text5 = Text:new({
+        content     = "",
+        align   = {
+            ref = Window,
+            y   = "bottom",
+        },
+        typeable    = true,
+        pos         = {
+            offsetX     = 10,
+            offsetY     = -10,
+        },
+    })
+
+    World:addItem(Text1)
+    World:addItem(Text2)
+    World:addItem(Text3)
+    World:addItem(Text4)
+    World:addItem(Text5)
 end
 
 

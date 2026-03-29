@@ -43,27 +43,25 @@ function World:addScene( scene )
     self.scenes[scene] = require("game.scenes." .. scene)
 end
 
-function World:add(...)
-    for i = 1, select("#", ...) do
-        local item = select(i, ...)
-        if self.items[item.id] == nil then
-            if drawable[item.kind] then
-                self.orderIsDirty                  = true
-                local last                         = #self.itemsCateg.toDraw + 1
-                item.drawOrder                     = last
-                self.itemsCateg.toDraw[last]       = item
-            end
-
-            if item.kind == "text" then
-                self.itemsCateg.texts[item.id]     = true
-            end
-            
-            self.items[item.id] = item
+function World:addItem(item)
+    item.id = self:nextID()
+    if self.items[item.id] == nil then
+        if drawable[item.kind] then
+            self.orderIsDirty                  = true
+            local last                         = #self.itemsCateg.toDraw + 1
+            item.drawOrder                     = last
+            self.itemsCateg.toDraw[last]       = item
         end
+
+        if item.kind == "text" then
+            self.itemsCateg.texts[item.id]     = true
+        end
+        
+        self.items[item.id] = item
     end
 end
 
-function World:remove(id)
+function World:removeItem(id)
     if self.itemsCateg.texts[id] then
         self.itemsCateg.texts[id]  = nil
     end

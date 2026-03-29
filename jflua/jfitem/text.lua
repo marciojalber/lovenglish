@@ -16,7 +16,6 @@ function Text:new(props)
     if props.align  == nil then props.align = {} end
 
     local obj = setmetatable({
-        id          = World:nextID(),
         typeable    = props.typeable    or false,
         level       = props.level       or "body", -- body, title, subtitle,
         pos         = {
@@ -31,7 +30,7 @@ function Text:new(props)
             h       = 0,
         },
         color       = props.color       or {1,1,1},
-        font        = props.font        or love.graphics.getFont(),
+        font        = props.font        or Config.fonts.default,
     }, {__index = self})
     obj:setContent(props.content  or "")
     return obj

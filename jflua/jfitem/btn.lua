@@ -13,7 +13,6 @@ function Btn:new(props)
     if props.dim    == nil then props.dim = {} end
 
     return setmetatable({
-        id          = World:nextID(),
         pos         = {
             x       = props.pos.x       or 0,
             y       = props.pos.y       or 0,
