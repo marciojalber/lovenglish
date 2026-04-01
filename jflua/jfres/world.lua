@@ -31,6 +31,7 @@ local drawable  = {
     btn         = true,
     card        = true,
     text        = true,
+    img         = true,
 }
 
 -- METHODS

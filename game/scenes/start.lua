@@ -7,65 +7,70 @@ local scene = {}
 -- LOAD SCENE
 function scene:load()
     local music         = Audio:load("music", "begining")
-    music.source:play()
+    Audio:play(music)
     
     local sfx_houver    = Audio:load("sfx", "hover1")
+    local sfx_click     = Audio:load("sfx", "click1")
+    local bg            = Image:load("bg", "begining")
+    local trees         = Image:load("env", "trees")
 
-    local Card1 = Card:new({
-        align   = {
-            ref = Window,
-            x   = "center",
-            y   = "center",
+    local ImgBg         = Img:new(bg)
+    local ImgTest       = Img:new(trees)
+    local Card1         = Card:new({
+        align           = {
+            ref         = Window,
+            x           = "center",
+            y           = "center",
         },
-        dim     = {
-            w   = 300,
-            h   = 200,
+        dim             = {
+            w           = 300,
+            h           = 200,
         },
     })
 
-    local Text1 = Text:new({
-        content = "CHOOSE YOUR GAME",
-        align   = {
-            ref = Window,
-            x   = "center",
-            y   = "center",
+    local Text1         = Text:new({
+        content         = "CHOOSE YOUR GAME",
+        align           = {
+            ref         = Window,
+            x           = "center",
+            y           = "center",
         },
-        pos     = {
-            offsetY = -60,
+        pos             = {
+            offsetY     = -60,
         },
-        font    = "title",
+        style           = "title",
     })
 
-    local Btn1  = Btn:new({
-        pos     = {
-            offsetY   = 10,
+    local Btn1          = Btn:new({
+        pos             = {
+            offsetY     = 10,
         },
-        align   = {
-            ref = Window,
-            x   = "center",
-            y   = "center",
+        align           = {
+            ref         = Window,
+            x           = "center",
+            y           = "center",
         },
-        dim     = {
-            w   = 100,
-            h   = 30,
+        dim             = {
+            w           = 100,
+            h           = 30,
         },
-        color   = {0.2, 0.25, 0.3},
+        color           = {0.2, 0.25, 0.3},
     })
 
-    local Btn2  = Btn:new({
-        pos     = {
-            offsetY   = 60,
+    local Btn2          = Btn:new({
+        pos             = {
+            offsetY     = 60,
         },
-        align   = {
-            ref = Window,
-            x   = "center",
-            y   = "center",
+        align           = {
+            ref         = Window,
+            x           = "center",
+            y           = "center",
         },
-        dim     = {
-            w   = 100,
-            h   = 30,
+        dim             = {
+            w           = 100,
+            h           = 30,
         },
-        color   = {0.2, 0.25, 0.3},
+        color           = {0.2, 0.25, 0.3},
     })
 
     function Btn1:onHover(event)
@@ -96,7 +101,12 @@ function scene:load()
         self.scaleY = 1
     end
 
+    function Btn1:onClick(x, y, button, istouch, presses)
+        Audio:play(sfx_click)
+    end
+    
     function Btn2:onClick(x, y, button, istouch, presses)
+        Audio:play(sfx_click)
         love.window.close()
     end
     
@@ -118,6 +128,8 @@ function scene:load()
         },
     })
 
+    World:addItem(ImgBg)
+    World:addItem(ImgTest)
     World:addItem(Card1)
     World:addItem(Btn1)
     World:addItem(Btn2)

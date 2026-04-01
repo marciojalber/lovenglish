@@ -21,7 +21,6 @@ function Text:new(props)
 
     local obj = setmetatable({
         typeable    = props.typeable    or false,
-        level       = props.level       or "body", -- body, title, subtitle,
         pos         = {
             x       = props.pos.x       or 0,
             y       = props.pos.y       or 0,
@@ -34,7 +33,8 @@ function Text:new(props)
             h       = 0,
         },
         color       = props.color       or {1,1,1},
-        font        = fonts[props.font  or "default"],
+        style       = props.style       or "default",
+        font        = fonts[props.style or "default"],
     }, {__index = self})
     obj:setContent(props.content or "")
     return obj

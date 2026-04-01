@@ -24,7 +24,7 @@ local window    = {
 local audio     = {
     volume      = {
         master  = 1.0,
-        music   = 0.4,
+        music   = 0.1,
         env     = 0.5,
         sfx     = 1.0,
         ui      = 1.0,
@@ -35,8 +35,18 @@ local audio     = {
             begining    = {"stream", "music/begining.mp3"},
         },
         sfx     = {
-            hover1      = {"static", "sounds/select_change.mp3"},
+            hover1      = {"static", "sounds/ui-soundpack/WAV/Modern4.wav"},
+            click1      = {"static", "sounds/ui-soundpack/WAV/Modern8.wav"},
         },
+    },
+}
+
+local img = {
+    bg      = {
+        begining    = "bg-beginig1.png",
+    },
+    env     = {
+        trees       = "base.png",
     },
 }
 
@@ -48,4 +58,5 @@ return {
     fonts   = fonts,
     window  = window,
     audio   = audio,
+    img     = img,
 }

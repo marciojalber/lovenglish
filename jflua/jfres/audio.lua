@@ -7,7 +7,8 @@
 local audio = {
     -- Itens
     maxVoices   = 20,
-    active      = {},  -- currently playing sources
+    activeMusic = nil,
+    active      = {},
     volume      = {
         master  = 1.0, -- global
         music   = 0.4, -- apart
@@ -25,11 +26,11 @@ local audio = {
 }
 
 if Config.audio and Config.audio.volume and Config.audio.volume.music then
-    audio.volume.fx = Config.audio.volume.music
+    audio.volume.music = Config.audio.volume.music
 end
 
 if Config.audio and Config.audio.volume and Config.audio.volume.sfx then
-    audio.volume.fx = Config.audio.volume.sfx
+    audio.volume.sfx = Config.audio.volume.sfx
 end
 
 function audio:load(group, name)
@@ -45,7 +46,7 @@ function audio:play(sound)
     self:cleanup()
 
     if #self.active >= self.maxVoices then
-        self:resolveVoice(self.priori[sound.group])
+        self:resolveVoice(sound)
     end
 
     if #self.active < self.maxVoices then
@@ -62,7 +63,12 @@ function audio:cleanup()
     end
 end
 
-function audio:resolveVoice(source, priority)
+function audio:resolveVoice(source)
+    if sound.group == "music" then
+        return
+    end
+
+    local priority = self.priori[sound.group]
     local lowestIndex = 1
     local lowestPriority = self.priori.ui
 
@@ -88,6 +94,17 @@ function audio:start(sound, group)
     
     s:setVolume(volume)
     s:play()
+
+    if sound.group == "music" then
+        if self.activeMusic and self.activeMusic:isPlaying() then
+            self.activeMusic:stop()
+        end
+        self.activeMusic = {
+            source = sound.source,
+        }
+        return
+    end
+
     table.insert(self.active, {
         group       = sound.group,
         source      = sound.source,
@@ -96,15 +113,14 @@ function audio:start(sound, group)
 end
 
 function audio:updateVolumes()
+    if self.activeMusic then
+        local volume = self.volume.master * self.volume.music
+        self.activeMusic.source:setVolume(volume)
+    end
+
     for _, v in pairs(self.active) do
-        local g = self.groups[v.group]
-
-        local finalVolume =
-            self.masterVolume *
-            (g and g.volume or 1.0) *
-            v.baseVolume
-
-        v.source:setVolume(finalVolume)
+        local volume = self.volume.master * self.volume[v.group]
+        v.source:setVolume(volume)
     end
 end
 

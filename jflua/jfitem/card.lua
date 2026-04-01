@@ -40,7 +40,7 @@ end
 
 function Card:Draw()
     love.graphics.setColor(self.color[1], self.color[2], self.color[3], 0.2)
-    love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.dim.w, self.dim.h)
+    love.graphics.rectangle("fill", self.pos.x + self.pos.offsetX, self.pos.y + self.pos.offsetY, self.dim.w, self.dim.h)
 end
 
 
